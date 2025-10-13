@@ -343,7 +343,7 @@ function confirmWhatsAppSend() {
   message += "_Aguardamos sua confirmação! 🚚_"
 
   // WhatsApp number (replace with your number)
-  const phoneNumber = "5511987654321" // Format: country code + area code + number
+  const phoneNumber = "5515996639799" // Format: country code + area code + number
 
   // Encode message
   const encodedMessage = encodeURIComponent(message)
