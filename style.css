@@ -43,6 +43,7 @@ body {
   border-bottom: 1px solid var(--border);
 }
 
+
 .header-content {
   display: flex;
   justify-content: space-between;
@@ -518,6 +519,7 @@ body {
 }
 
 .sidebar-content {
+  padding-bottom: 8rem;
   flex: 1;
   overflow-y: auto;
 }
@@ -703,9 +705,16 @@ body {
 
 
 .sidebar-footer {
-  padding: 1.0rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom));
   border-top: 2px solid var(--border);
   background-color: var(--card-bg);
+  z-index: 1000;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .total {

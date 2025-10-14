@@ -13,7 +13,7 @@ const products = [
     name: "Tijolo baiano 8 Furos",
     category: "tijolos",
     price: 1.10,
-    description: "Tijolo cerâmico 6 furos 9x14x19cm",
+    description: "Tijolo cerâmico 8 furos 9x19x19cm",
     image: "imagens/tijolo-8.jpg",
   },
   {
