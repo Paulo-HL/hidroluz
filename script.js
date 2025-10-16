@@ -5,7 +5,7 @@ const products = [
     name: "Cimento CP II 50kg",
     category: "cimento",
     price: 35.90,
-    description: "Cimento Portland CP II para uso geral",
+    description: "Cimento Caue CP II para uso geral",
     image: "imagens/cimento-caue.jpg",
   },
   {
