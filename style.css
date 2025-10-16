@@ -31,16 +31,25 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  padding-bottom: 8rem;
 }
 
 
-.header {
-  background-color: var(--dark);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  border-bottom: 1px solid var(--border);
+.sidebar-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--card-bg);
+    border-top: 2px solid var(--border);
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.25);
+    padding: 1rem;
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    z-index: 9999;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 
@@ -519,7 +528,7 @@ body {
 }
 
 .sidebar-content {
-  padding-bottom: 8rem;
+  padding-bottom: 2rem;
   flex: 1;
   overflow-y: auto;
 }
@@ -701,20 +710,6 @@ body {
 .payment-option input[type="radio"]:checked ~ .payment-label {
   color: var(--primary);
   font-weight: 600;
-}
-
-
-.sidebar-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 1rem;
-  padding-bottom: calc(1rem + env(safe-area-inset-bottom));
-  border-top: 2px solid var(--border);
-  background-color: var(--card-bg);
-  z-index: 1000;
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .total {

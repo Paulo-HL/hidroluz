@@ -68,7 +68,7 @@ const products = [
     id: 9,
     name: "Lampada de 9W LED",
     category: "eletrica",
-    price: 2.99,
+    price: 3.90,
     description: "Lâmpada LED 9W Bivolt E27",
     image: "imagens/lampada 9.jpg",
   },
@@ -98,24 +98,24 @@ const products = [
   },
 ]
 
-// Cart State
+
 let cart = []
 
-// Lucide Icon Library
+
 const lucide = {
   createIcons: () => {
-    // Placeholder for Lucide icon creation logic
+  
   },
 }
 
-// Initialize
+
 document.addEventListener("DOMContentLoaded", () => {
   loadProducts()
   loadCart()
   updateCartUI()
 })
 
-// Load Products
+
 function loadProducts(filter = "all") {
   const grid = document.getElementById("productsGrid")
   const filteredProducts = filter === "all" ? products : products.filter((p) => p.category === filter)
@@ -140,9 +140,9 @@ function loadProducts(filter = "all") {
     .join("")
 }
 
-// Filter Products
+
 function filterProducts(category) {
-  // Update active button
+ 
   document.querySelectorAll(".filter-btn").forEach((btn) => {
     btn.classList.remove("active")
   })
@@ -151,7 +151,7 @@ function filterProducts(category) {
   loadProducts(category)
 }
 
-// Get Category Name
+
 function getCategoryName(category) {
   const names = {
     cimento: "Cimento e Argamassa",
@@ -163,7 +163,7 @@ function getCategoryName(category) {
   return names[category] || category
 }
 
-// Add to Cart
+
 function addToCart(productId) {
   const product = products.find((p) => p.id === productId)
   const existingItem = cart.find((item) => item.id === productId)
@@ -180,18 +180,43 @@ function addToCart(productId) {
   saveCart()
   updateCartUI()
 
-  // Show cart
+
   toggleCart(true)
 }
+function adicionarProduto(nome, precoBase) {
+    let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
 
-// Remove from Cart
+
+    let produto = carrinho.find(p => p.nome === nome);
+
+    if (produto) {
+        produto.quantidade++;
+    } else {
+        produto = { nome, preco: precoBase, quantidade: 1 };
+        carrinho.push(produto);
+    }
+
+
+    if (produto.nome === "Lâmpada") {
+        if (produto.quantidade >= 10) {
+            produto.preco = 2.99;
+        } else {
+            produto.preco = 3.90;
+        }
+    }
+
+    localStorage.setItem('carrinho', JSON.stringify(carrinho));
+    atualizarCarrinho();
+}
+
+
 function removeFromCart(productId) {
   cart = cart.filter((item) => item.id !== productId)
   saveCart()
   updateCartUI()
 }
 
-// Update Quantity
+
 function updateQuantity(productId, change) {
   const item = cart.find((item) => item.id === productId)
   if (item) {
@@ -205,7 +230,6 @@ function updateQuantity(productId, change) {
   }
 }
 
-// Clear Cart
 function clearCart() {
   if (confirm("Deseja realmente limpar o carrinho?")) {
     cart = []
@@ -214,17 +238,17 @@ function clearCart() {
   }
 }
 
-// Update Cart UI
+
 function updateCartUI() {
   const cartCount = document.getElementById("cartCount")
   const listaCarrinho = document.getElementById("listaCarrinho")
   const valorTotal = document.getElementById("valorTotal")
 
-  // Update count
+
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0)
   cartCount.textContent = totalItems
 
-  // Update items
+
   if (cart.length === 0) {
     listaCarrinho.innerHTML = '<p class="empty-cart">Seu carrinho está vazio</p>'
   } else {
@@ -249,12 +273,12 @@ function updateCartUI() {
       .join("")
   }
 
-  // Update total
+
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
   valorTotal.textContent = `R$ ${total.toFixed(2)}`
 }
 
-// Toggle Cart
+
 function toggleCart(forceOpen = false) {
   const sidebar = document.getElementById("sidebarCarrinho")
   const overlay = document.getElementById("overlay")
@@ -272,25 +296,25 @@ document.getElementById("abrirCarrinho").addEventListener("click", () => toggleC
 document.getElementById("fecharCarrinho").addEventListener("click", () => toggleCart())
 document.getElementById("overlay").addEventListener("click", () => toggleCart())
 
-// Send to WhatsApp
+
 function sendToWhatsApp() {
   if (cart.length === 0) {
     alert("Seu carrinho está vazio!")
     return
   }
 
-  // Get customer information
+
   const customerName = document.getElementById("customerName").value.trim()
   const customerPhone = document.getElementById("customerPhone").value.trim()
   const customerAddress = document.getElementById("customerAddress").value.trim()
 
-  // Validate customer information
+ 
   if (!customerName || !customerPhone || !customerAddress) {
     alert("Por favor, preencha todas as informações de entrega!")
     return
   }
 
-  // Show confirmation modal
+
   showWhatsAppModal()
 }
 
@@ -306,12 +330,12 @@ function closeWhatsAppModal() {
 }
 
 function confirmWhatsAppSend() {
-  // Get customer information
+
   const customerName = document.getElementById("customerName").value.trim()
   const customerPhone = document.getElementById("customerPhone").value.trim()
   const customerAddress = document.getElementById("customerAddress").value.trim()
 
-  // Get payment method
+
   const paymentMethod = document.querySelector('input[name="payment"]:checked').value
   const paymentNames = {
     dinheiro: "Dinheiro",
@@ -319,7 +343,7 @@ function confirmWhatsAppSend() {
     pix: "PIX",
   }
 
-  // Format message
+
   let message = "*🏗️ PEDIDO HIDROLUZ*\n\n"
 
   message += "*👤 DADOS DO CLIENTE*\n"
@@ -342,19 +366,16 @@ function confirmWhatsAppSend() {
 
   message += "_Aguardamos sua confirmação! 🚚_"
 
-  // WhatsApp number (replace with your number)
-  const phoneNumber = "5515996639799" // Format: country code + area code + number
+  
+  const phoneNumber = "5515996639799" 
 
-  // Encode message
+
   const encodedMessage = encodeURIComponent(message)
 
-  // Close modal
   closeWhatsAppModal()
 
-  // Open WhatsApp
   window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, "_blank")
 
-  // Clear cart after sending
   setTimeout(() => {
     cart = []
     saveCart()
@@ -363,12 +384,12 @@ function confirmWhatsAppSend() {
   }, 1000)
 }
 
-// Save Cart to LocalStorage
+
 function saveCart() {
   localStorage.setItem("hidroluz_cart", JSON.stringify(cart))
 }
 
-// Load Cart from LocalStorage
+
 function loadCart() {
   const savedCart = localStorage.getItem("hidroluz_cart")
   if (savedCart) {
@@ -376,7 +397,6 @@ function loadCart() {
   }
 }
 
-// Smooth Scroll
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", function (e) {
     e.preventDefault()
