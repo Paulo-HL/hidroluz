@@ -148,7 +148,7 @@ function filterProducts(category) {
   })
   event.target.classList.add("active")
 
-  loadProducts(category)
+  loadProducts(category)  
 }
 
 
